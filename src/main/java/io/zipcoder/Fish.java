@@ -1,6 +1,6 @@
 package io.zipcoder;
 
-public class Fish extends Pet {
+public class Fish extends Pet implements Comparable<Fish> {
 
     public Fish(String name) {
         super(name);
@@ -8,6 +8,10 @@ public class Fish extends Pet {
 
     public Fish() {
         super.name = "Fish";
+    }
+
+    public int compareTo(Fish other) {
+        return name.compareTo(other.name);
     }
 
     @Override

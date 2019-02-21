@@ -1,8 +1,7 @@
 package io.zipcoder;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Application {
 
@@ -14,10 +13,7 @@ public class Application {
         for (int i = 0; i < numberOfPets; i++) {
             String petType = ioconsole.getStringInput("What kind of pet is it?");
             petType = petType.toLowerCase();
-            if (petType.equals("dog") == false && petType.equals("cat") == false && petType.equals("fish") == false) {
-                ioconsole.print("Invalid pet type. ");
-                i = i - 1;
-            } else if (petType.equals("dog")) {
+            if (petType.equals("dog")) {
                 String petsName = ioconsole.getStringInput("What is it's name?");
                 Pet dog = new Dog(petsName);
                 pets.put(dog, petsName);
@@ -25,18 +21,34 @@ public class Application {
                 String petsName = ioconsole.getStringInput("What is it's name?");
                 Pet cat = new Cat(petsName);
                 pets.put(cat, petsName);
-            } else {
+            } else if (petType.equals("fish")) {
                 String petsName = ioconsole.getStringInput("What is it's name?");
                 Pet fish = new Fish(petsName);
                 pets.put(fish, petsName);
+            } else {
+                ioconsole.print("Invalid pet type. ");
+                i = i - 1;
             }
         }
-        String allPets = "";
-        for (Map.Entry<Pet, String> entry: pets.entrySet()) {
-            allPets += String.format("%s %s ", entry.getValue(), entry.getKey().speak());
+
+//        String allPets = "";
+//        for (Map.Entry<Pet, String> entry: pets.entrySet()) {
+//            allPets += String.format("%s %s ", entry.getValue(), entry.getKey().speak());
+//        }
+//
+//        allPets = allPets.trim();
+//        ioconsole.println(allPets);
+
+        Map<Pet, String> sorted = new TreeMap<Pet, String>(new PetComparator<Pet>());
+        sorted.putAll(pets);
+
+        String sortedPets = "";
+        for (Map.Entry<Pet, String> entry: sorted.entrySet()) {
+            sortedPets += String.format("%s %s ", entry.getValue(), entry.getKey().speak());
         }
-        allPets = allPets.trim();
-        ioconsole.println(allPets);
+
+        sortedPets = sortedPets.trim();
+        ioconsole.println(sortedPets);
     }
 
 }
